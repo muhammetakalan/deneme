@@ -13,7 +13,7 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 2405
+          port: ${{ secrets.SERVER_PORT }}
           script: |
             # 1. Proje klasörüne git
             cd /srv/nextjs
