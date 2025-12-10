@@ -16,7 +16,7 @@ jobs:
           port: 2405
           script: |
             # 1. Proje klasörüne git
-            cd /srv/isletmem-app
+            cd /srv/nextjs
 
             # 2. Kodları GitHub'dan çek
             git pull origin main
@@ -24,7 +24,7 @@ jobs:
             # 3. Docker Compose ile yeniden başlat
             # --build: Değişiklik varsa yeniden derler
             # -d: Arka planda çalıştırır
-            docker compose up -d --build
+            docker-compose up -d --build
 
             # 4. Temizlik (İsteğe bağlı)
             # Yer kaplayan eski/kullanılmayan imajları siler
