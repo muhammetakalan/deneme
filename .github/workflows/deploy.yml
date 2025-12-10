@@ -1,0 +1,31 @@
+name: Deploy to Production
+on:
+  push:
+    branches: ["main"] # main dalına kod gelince çalışır
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            # 1. Proje klasörüne git
+            cd /srv/isletmem-app
+
+            # 2. Kodları GitHub'dan çek
+            git pull origin main
+
+            # 3. Docker Compose ile yeniden başlat
+            # --build: Değişiklik varsa yeniden derler
+            # -d: Arka planda çalıştırır
+            docker compose up -d --build
+
+            # 4. Temizlik (İsteğe bağlı)
+            # Yer kaplayan eski/kullanılmayan imajları siler
+            docker image prune -f
